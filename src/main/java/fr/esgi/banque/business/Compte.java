@@ -44,7 +44,7 @@ public class Compte {
 	}
 
 	public void crediter(BigDecimal montant) {
-		if (montant == null || montant.signum() < 0) {
+		if (montant == null || montant.signum() <= 0) {
 			throw new IllegalArgumentException("Le montant à créditer doit être strictement positif");
 		}
 		solde = solde.add(montant);
@@ -59,6 +59,14 @@ public class Compte {
 			throw new SoldeInsuffisantException(numero, montant);
 		}
 		solde = nouveauSolde;
+	}
+
+	public void virer(BigDecimal montant, Compte destination) {
+		if (destination == null) {
+			throw new IllegalArgumentException("Le compte de destination ne peut pas être null");
+		}
+		this.debiter(montant);
+		destination.crediter(montant);
 	}
 
 	public boolean estVide() {
