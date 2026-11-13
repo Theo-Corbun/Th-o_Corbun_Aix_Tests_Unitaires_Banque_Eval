@@ -8,7 +8,7 @@
 
 | Règle | Description du défaut | Nom du test associé |
 |-------|------------------------|---------------------|
-| | | |
+| C3 | `crediter` autorisait un montant nul (0) au lieu de l'interdire | `shouldRejectZeroOrNegativeAmountWhenCrediting` |
 
 ## Partie B : Suivi du TDD
 - [ ] V1
