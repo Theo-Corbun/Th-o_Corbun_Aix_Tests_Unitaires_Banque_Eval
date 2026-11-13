@@ -8,7 +8,8 @@
 
 | Règle | Description du défaut | Nom du test associé |
 |-------|------------------------|---------------------|
-| C3 | `crediter` autorisait un montant nul (0) au lieu de l'interdire | `shouldRejectZeroOrNegativeAmountWhenCrediting` |
+| C3 | `crediter` autorisait un montant nul (0) au lieu de l'interdire[cite: 1] | `shouldRejectZeroOrNegativeAmountWhenCrediting` |
+| C4 | `debiter` gère déjà correctement le rejet des montants nuls ou négatifs[cite: 1] | `shouldRejectZeroOrNegativeAmountWhenDebiting` |
 
 ## Partie B : Suivi du TDD
 - [ ] V1

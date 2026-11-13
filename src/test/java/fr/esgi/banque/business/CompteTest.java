@@ -15,13 +15,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class CompteTest {
 
 	@Test
-	void shouldRejectZeroOrNegativeAmountWhenCrediting() {
+	void shouldRejectZeroOrNegativeAmountWhenDebiting() {
 		Compte compte = new Compte("FR001", "Alice", new BigDecimal("100.00"), new BigDecimal("200"));
 
-		assertThatThrownBy(() -> compte.crediter(BigDecimal.ZERO))
+		assertThatThrownBy(() -> compte.debiter(BigDecimal.ZERO))
 				.isInstanceOf(IllegalArgumentException.class);
 
-		assertThatThrownBy(() -> compte.crediter(new BigDecimal("-10.00")))
+		assertThatThrownBy(() -> compte.debiter(new BigDecimal("-10.00")))
 				.isInstanceOf(IllegalArgumentException.class);
 	}
 
