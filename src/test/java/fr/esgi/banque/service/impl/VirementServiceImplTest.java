@@ -31,21 +31,26 @@ class VirementServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        // Horloge fixée à un lundi (16/11/2026)
         horloge = Clock.fixed(Instant.parse("2026-11-16T10:00:00Z"), ZoneId.of("Europe/Paris"));
         service = new VirementServiceImpl(repository, notifications, horloge);
     }
 
     @Test
-    void shouldRejectNullAmount() { // <--- TEST V1 : montant null
+    void shouldRejectNullAmount() {
         assertThatThrownBy(() -> service.virer("FR001", "FR002", null))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"0", "0.00", "-0.01", "-100.00"})
-    void shouldRejectZeroOrNegativeAmount(String montantInvalide) { // <--- TEST V1 : montant nul ou négatif
+    void shouldRejectZeroOrNegativeAmount(String montantInvalide) {
         assertThatThrownBy(() -> service.virer("FR001", "FR002", new BigDecimal(montantInvalide)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void shouldRejectSameAccountTransfer() { // <--- AJOUTÉ POUR RED V2 : Même compte source et destination
+        assertThatThrownBy(() -> service.virer("FR001", "FR001", new BigDecimal("50.00")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
