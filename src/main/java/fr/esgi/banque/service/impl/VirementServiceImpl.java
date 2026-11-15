@@ -20,7 +20,10 @@ public class VirementServiceImpl {
     }
 
     public Virement virer(String numeroSource, String numeroDestination, BigDecimal montant) {
-        return null; // <--- RED V1 : Ne fait rien pour faire échouer le test V1
+        if (montant == null || montant.signum() <= 0) { // <--- AJOUTÉ POUR GREEN V1 : Rejette null, 0 ou négatif
+            throw new IllegalArgumentException("Le montant doit être strictement positif");
+        }
+        return null;
     }
 
 }

@@ -20,7 +20,7 @@
 | F5 | Les `return BigDecimal.ZERO` anticipés de F3 et F4 ignoraient le supplément de 5,00 € de la carte premium | `shouldCalculateCorrectFees` |
 
 ## Partie B : Suivi du TDD
-- [ ] V1
+- [x] V1 : Rejet d'un montant null, nul ou négatif (`IllegalArgumentException`)
 - [ ] V2
 - [ ] V3
 - [ ] V4
