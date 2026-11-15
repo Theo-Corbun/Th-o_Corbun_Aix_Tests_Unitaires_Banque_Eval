@@ -7,12 +7,13 @@ import java.math.BigDecimal;
  *
  * <p>Règles métier (voir README) :
  * <ul>
- *   <li>F1 : le titulaire doit être majeur (18 ans ou plus) et le solde moyen est obligatoire,
- *       sinon IllegalArgumentException.</li>
- *   <li>F2 : les frais de tenue de compte sont de 2,00 € par mois.</li>
- *   <li>F3 : les frais de tenue sont offerts aux titulaires de moins de 26 ans.</li>
- *   <li>F4 : les frais de tenue sont offerts si le solde moyen du mois atteint 1 000 € ou plus.</li>
- *   <li>F5 : une carte premium ajoute 5,00 € par mois, toujours dus, même quand la tenue est offerte.</li>
+ *    <li>F1 : le titulaire doit être majeur (18 ans ou plus) et le solde moyen est obligatoire,
+ *       sinon IllegalArgumentException.
+ *    </li>
+ *    <li>F2 : les frais de tenue de compte sont de 2,00 € par mois.</li>
+ *    <li>F3 : les frais de tenue sont offerts aux titulaires de moins de 26 ans.</li>
+ *    <li>F4 : les frais de tenue sont offerts si le solde moyen du mois atteint 1 000 € ou plus.</li>
+ *    <li>F5 : une carte premium ajoute 5,00 € par mois, toujours dus, même quand la tenue est offerte.</li>
  * </ul>
  */
 public class CalculFrais {
@@ -24,20 +25,20 @@ public class CalculFrais {
 	static final BigDecimal SEUIL_GRATUITE = new BigDecimal("1000");
 
 	public BigDecimal fraisMensuels(int ageTitulaire, BigDecimal soldeMoyen, boolean cartePremium) {
-		if (ageTitulaire < AGE_MAJORITE) {
+		if (ageTitulaire < AGE_MAJORITE) { // <--- F1 : FONCTIONNAIT DÉJÀ (aucune modification)
 			throw new IllegalArgumentException("Le titulaire doit être majeur");
 		}
-		if (soldeMoyen == null) {
+		if (soldeMoyen == null) { // <--- F1 : FONCTIONNAIT DÉJÀ (aucune modification)
 			throw new IllegalArgumentException("Le solde moyen est obligatoire");
 		}
-		if (ageTitulaire <= AGE_JEUNE) {
-			return BigDecimal.ZERO;
+		BigDecimal frais = FRAIS_TENUE; // <--- F2 : FONCTIONNAIT DÉJÀ (juste remonté avant les if de F3 et F4)
+		if (ageTitulaire < AGE_JEUNE) { // <--- F3 MODIFIÉ : < au lieu de <= (moins de 26 ans)
+			frais = BigDecimal.ZERO;     // <--- F3 & F5 MODIFIÉ : frais = ZERO au lieu de return (pour ne pas sauter F5)
 		}
-		if (soldeMoyen.compareTo(SEUIL_GRATUITE) > 0) {
-			return BigDecimal.ZERO;
+		if (soldeMoyen.compareTo(SEUIL_GRATUITE) >= 0) { // <--- F4 MODIFIÉ : >= 0 au lieu de > 0 (1000 € ou plus)
+			frais = BigDecimal.ZERO;                      // <--- F4 & F5 MODIFIÉ : frais = ZERO au lieu de return (pour ne pas sauter F5)
 		}
-		BigDecimal frais = FRAIS_TENUE;
-		if (cartePremium) {
+		if (cartePremium) { // <--- F5 : FONCTIONNAIT DÉJÀ (exécuté dans tous les cas grâce à la suppression des return plus haut)
 			frais = frais.add(SUPPLEMENT_PREMIUM);
 		}
 		return frais;

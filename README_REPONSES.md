@@ -8,11 +8,16 @@
 
 | Règle | Description du défaut | Nom du test associé |
 |-------|------------------------|---------------------|
-| C3 | `crediter` autorisait un montant nul (0) au lieu de l'interdire[cite: 1] | `shouldRejectZeroOrNegativeAmountWhenCrediting` |
-| C4 | `debiter` gère déjà correctement le rejet des montants nuls ou négatifs[cite: 1] | `shouldRejectZeroOrNegativeAmountWhenDebiting` |
+| C3 | `crediter` autorisait un montant nul (0) au lieu de l'interdire | `shouldRejectZeroOrNegativeAmountWhenCrediting` |
+| C4 | Aucun défaut (`debiter` rejetait déjà les montants nuls ou négatifs) | `shouldRejectZeroOrNegativeAmountWhenDebiting` |
 | C5 | `debiter` ne vérifiait pas correctement la limite du découvert autorisé | `shouldRejectDebitExceedingOverdraft` |
-| C6 | `estVide()` manquante ou incorrecte pour les écritures de zéro | `shouldReturnTrueWhenAccountIsEmpty` |
-| C7 | `estADecouvert()` manquante ou incorrecte pour les soldes négatifs | `shouldReturnTrueWhenAccountIsAtOverdraft` |
+| C6 | `estVide()` utilisait `equals` au lieu de `compareTo` pour tester le solde à zéro | `shouldReturnTrueWhenAccountIsEmpty` |
+| C7 | Vérification de la méthode `estADecouvert()` pour un solde négatif | `shouldReturnTrueWhenAccountIsAtOverdraft` |
+| F1 | Aucun défaut (âge >= 18 et solde moyen non null déjà vérifiés) | `shouldRejectUnderageOrNullSoldeMoyen` |
+| F2 | Aucun défaut (frais de base à 2,00 € déjà définis, ligne remontée avant F3/F4) | `shouldCalculateCorrectFees` |
+| F3 | L'âge limite utilisait `<= 26` au lieu de `< 26` | `shouldCalculateCorrectFees` |
+| F4 | Le seuil de gratuité utilisait `> 1000` au lieu de `>= 1000` | `shouldCalculateCorrectFees` |
+| F5 | Les `return BigDecimal.ZERO` anticipés de F3 et F4 ignoraient le supplément de 5,00 € de la carte premium | `shouldCalculateCorrectFees` |
 
 ## Partie B : Suivi du TDD
 - [ ] V1
